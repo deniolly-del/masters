@@ -62,4 +62,409 @@
     }
     .jspsych-survey-multi-choice-option {
       font-size: 14px !important;
-      font-family: 'DM Mono',
+      font-family: 'DM Mono', monospace !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+    }
+    .jspsych-survey-multi-choice-option input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      margin: 0 !important;
+      flex-shrink: 0;
+    }
+
+    .jspsych-survey-text .jspsych-survey-text-question p {
+      font-family: 'Fraunces', serif !important;
+      font-size: 16px !important;
+      color: #333;
+    }
+
+    #jspsych-survey-html-form input[type="number"] {
+      width: 80px; padding: 6px 10px; font-size: 16px;
+      border: 1px solid #ccc; border-radius: 4px;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .jspsych-btn {
+      font-family: 'DM Mono', monospace !important;
+      font-size: 16px !important;
+      padding: 12px 28px !important;
+      margin: 30px auto 20px auto !important;
+      display: block !important;
+      background-color: #4a7ab5 !important;
+      color: white !important;
+      border: none !important;
+      border-radius: 40px !important;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .jspsych-btn:hover {
+      background-color: #3a6a9e !important;
+    }
+
+    .jspsych-content-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: auto;
+    }
+
+    .video-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .video-wrapper iframe,
+    .video-wrapper video {
+      width: 100%;
+      max-width: 800px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    
+    @media (max-width: 768px) {
+      .video-wrapper iframe,
+      .video-wrapper video {
+        height: auto;
+        min-height: 250px;
+      }
+    }
+
+    .end-screen {
+      font-family: 'Fraunces', serif; text-align: center; padding: 40px 20px;
+      max-width: 600px; margin: 0 auto;
+    }
+    .end-screen h1 { font-size: 28px; font-weight: 300; margin-bottom: 20px; color: #2a2a2a; }
+    .end-screen p { font-size: 16px; color: #555; line-height: 1.7; margin-bottom: 12px; }
+  </style>
+</head>
+<body></body>
+<script>
+
+/* ═══════════════════════════════════════════════════════════════
+   CONFIG
+   ═══════════════════════════════════════════════════════════════ */
+var DATAPIPE_EXPERIMENT_ID = "PgUsKMpOuZGD";
+
+/* ═══════════════════════════════════════════════════════════════
+   HELPERS
+   ═══════════════════════════════════════════════════════════════ */
+var L5 = ["1 – Почти или совсем нет", "2 – Немного", "3 – Умеренно", "4 – Значительно", "5 – Очень сильно"];
+var L7 = ["1 – полностью не согласен", "2 – не согласен", "3 – скорее не согласен", "4 – нечто среднее", "5 – скорее согласен", "6 – согласен", "7 – полностью согласен"];
+var L5sc = ["1 – совершенно не согласен", "2 – скорее не согласен", "3 – нечто среднее", "4 – скорее согласен", "5 – совершенно согласен"];
+
+function likertQ(prompt, labels, name) {
+  return { prompt: prompt, options: labels, required: true, name: name };
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   EXPERIMENT TIMELINE
+   ═══════════════════════════════════════════════════════════════ */
+var jsPsych = initJsPsych();
+var subject_id = jsPsych.randomization.randomID(10);
+var filename = subject_id + ".csv";
+
+
+/* ── PAGE 1: Consent ── */
+var page1 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '<div class="page">' +
+    '<h1>Уважаемый участник!</h1>' +
+    '<p>Спасибо за Ваш вклад в наше исследование! Это исследование посвящено изучению взаимосвязи личностных особенностей, эмоционального состояния и просмотра видео.</p>' +
+    '<p><strong>Что Вас ждёт:</strong></p>' +
+    '<ul><li>Небольшой опросник о Вашем текущем состоянии (2 минуты)</li><li>Просмотр видео (5-7 минут)</li><li>Несколько опросников о личностных особенностях (5-7 минут)</li><li>Несколько вопросов о технических аспектах прохождения (около 1 минуты)</li><li>Более подробная информация об исследовании, наша безграничная благодарность и 🐱🎉 небольшой подарок в виде подборки смешных картинок с котами 🐱🎉(время не ограничено)!</li></ul>' +
+    '<p><strong>Важные условия:</strong></p>' +
+    '<p>Пожалуйста, выделите около 15–20 минут непрерывного времени, чтобы пройти исследование без перерыва.</p>' +
+    '<p>Перед началом рекомендуется отключить уведомления на телефоне и/или компьютере.</p>' +
+    '<p>Все ответы анонимны и будут использоваться только в обобщённом виде в рамках научного исследования.</p>' +
+    '<p>Участие является полностью добровольным. Вы можете в любой момент прекратить участие, просто закрыв страницу.</p>' +
+    '<p>К участию приглашаются люди старше 18 лет.</p>' +
+    '<p>После завершения исследования Вы увидите более подробную информацию о его целях.</p>' +
+    '<p class="note">Нажмите «Далее», если Вы ознакомились с условиями и согласны принять участие.</p>' +
+    '</div>',
+  choices: ['Далее'],
+  data: { trial_label: 'consent' }
+};
+
+/* ── PAGE 2: Demographics (самая первая!) ── */
+var page2 = {
+  type: jsPsychSurveyHtmlForm,
+  preamble: '<div class="page"><h1>Демографические данные</h1></div>',
+  html:
+    '<div style="max-width:500px;margin:0 auto;font-family:Fraunces,serif;font-size:16px;">' +
+    '<p style="margin-bottom:8px;"><strong>Укажите Ваш пол:</strong></p>' +
+    '<label style="display:block;margin:4px 0;"><input type="radio" name="gender" value="female" required> Женщина</label>' +
+    '<label style="display:block;margin:4px 0;"><input type="radio" name="gender" value="male"> Мужчина</label>' +
+    '<label style="display:block;margin:4px 0;"><input type="radio" name="gender" value="prefer_not"> Предпочитаю не указывать</label>' +
+    '<p style="margin-top:20px;margin-bottom:8px;"><strong>Укажите Ваш возраст:</strong></p>' +
+    '<input type="number" name="age" min="18" max="99" required placeholder="Возраст">' +
+    '</div>',
+  button_label: 'Далее',
+  data: { trial_label: 'demographics' }
+};
+
+/* ── PAGE 3: PANAS PRE (сейчас) ── */
+var panas_pre_items = [
+  "увлеченный", "подавленный", "радостный", "расстроенный", "полный сил",
+  "виноватый", "испуганный", "злой", "заинтересованный", "уверенный",
+  "раздраженный", "сосредоточенный", "стыдящийся", "вдохновленный", "нервный",
+  "решительный", "внимательный", "беспокойный", "бодрый", "тревожный", "скучающий"
+];
+
+var page3 = {
+  type: jsPsychSurveyMultiChoice,
+  preamble: '<div class="page"><p>Этот опросник состоит из перечня прилагательных, которые описывают различные чувства и эмоции. Прочитайте каждое прилагательное и отметьте, в какой мере Вы чувствуете себя так <strong>сейчас</strong> (в настоящий момент).</p></div>',
+  questions: panas_pre_items.map(function(item, i) {
+    return likertQ(item, L5, 'panas_pre_' + (i+1));
+  }),
+  button_label: 'Далее',
+  data: { trial_label: 'panas_pre' }
+};
+
+/* ── PAGE 4: Инструкция перед видео ── */
+var page4 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '<div class="page">' +
+    '<h1>Инструкция</h1>' +
+    '<p>Сейчас Вы увидите видео. Пожалуйста, посмотрите его внимательно.</p>' +
+    '<p>Видео длится несколько минут. После просмотра Вам будет предложено ответить на несколько вопросов.</p>' +
+    '<p class="note">Нажмите «Смотреть видео», чтобы продолжить.</p>' +
+    '</div>',
+  choices: ['Смотреть видео'],
+  data: { trial_label: 'video_instruction' }
+};
+
+/* ── PAGE 5: Видео ── */
+var page5_video = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '<div class="video-container">' +
+    '<div class="video-wrapper">' +
+    '<video id="main-video" width="800" controls>' +
+    '<source src="https://github.com/deniolly-del/materials/raw/refs/heads/main/converted-online-video-cuttercom-1_9aDY25jA.mp4" type="video/mp4">' +
+    'Ваш браузер не поддерживает видео' +
+    '</video>' +
+    '<p style="margin-top: 20px; font-size: 14px; color: #666; text-align: center;">▶️ Нажмите "play" для просмотра<br>После окончания видео нажмите кнопку "Далее"</p>' +
+    '</div>' +
+    '</div>',
+  choices: ['Далее'],
+  data: { trial_label: 'video_task' },
+  on_load: function() {
+    var video = document.getElementById('main-video');
+    if (video) {
+      video.playbackRate = 1.0;
+      video.addEventListener('ratechange', function() {
+        if (video.playbackRate !== 1.0) {
+          video.playbackRate = 1.0;
+        }
+      });
+    }
+  }
+};
+
+/* ── PAGE 6: PANAS POST (во время просмотра видео) ── */
+var panas_post_items = [
+  "скучающий", "виноватый", "внимательный", "беспокойный", "уверенный",
+  "бодрый", "подавленный", "стыдящийся", "раздраженный", "решительный",
+  "расстроенный", "увлеченный", "злой", "вдохновленный", "сосредоточенный",
+  "испуганный", "заинтересованный", "тревожный", "нервный", "радостный", "полный сил"
+];
+
+var page6 = {
+  type: jsPsychSurveyMultiChoice,
+  preamble: '<div class="page"><p>Прочитайте, пожалуйста, каждое прилагательное и отметьте, в какой мере Вы чувствовали себя <strong>ВО ВРЕМЯ ПРОСМОТРА ВИДЕО</strong>.</p></div>',
+  questions: panas_post_items.map(function(item, i) {
+    return likertQ(item, L5, 'panas_post_' + (i+1));
+  }),
+  button_label: 'Далее',
+  data: { trial_label: 'panas_post' }
+};
+
+/* ── PAGE 7: Boredom Proneness (BPS-SR, 9 items, 7-point) ── */
+var boredom_items = [
+  "Я часто бываю растерянным и не знаю, что делать.",
+  "Мне сложно себя чем-нибудь развлечь.",
+  "Многое из того, что мне приходится делать, однообразно и уныло.",
+  "Мне нужен более серьезный стимул для каких-либо действий, чем большинству людей.",
+  "Мне не нравится большинство вещей, которыми я занимаюсь.",
+  "Если вы внимательно прочитали вопрос, пожалуйста, выберите вариант 2.",
+  "В большинстве ситуаций мне трудно обнаружить что-нибудь интересное для себя.",
+  "Большую часть времени я просто сижу без дела.",
+  "Если я не занят чем-нибудь захватывающим, даже опасным, то чувствую себя неживым."
+];
+
+var page7 = {
+  type: jsPsychSurveyMultiChoice,
+  preamble: '<div class="page"><p>Оцените, пожалуйста, каждое утверждение по шкале от 1 («полностью не согласен») до 7 («полностью согласен»).</p></div>',
+  questions: boredom_items.map(function(item, i) {
+    return likertQ(item, L7, 'boredom_' + (i+1));
+  }),
+  button_label: 'Далее',
+  data: { trial_label: 'boredom_proneness' }
+};
+
+/* ── PAGE 8: Sense of Agency (SoAS, 13 items, 7-point) ── */
+var agency_items = [
+  "Я полностью контролирую все, что я делаю.",
+  "Я всего лишь инструмент в чьих-то руках.",
+  "Мои действия просто случаются без всякого намерения с моей стороны.",
+  "Я — автор своих поступков.",
+  "Последствия моих действий логически не связаны с самими моими действиями.",
+  "Мои движения автоматические: мое тело просто делает их и все.",
+  "Последствия моих поступков обычно удивляют меня.",
+  "Все, что я делаю, я делаю по своей свободной воле.",
+  "Решение, как и когда действовать, принимаю я.",
+  "На самом деле я ничего не делаю по своей воле.",
+  "Что бы я ни делал, я чувствую себя запрограммированным роботом.",
+  "Я планирую свое поведение от начала и до конца.",
+  "Я несу полную ответственность за все результаты своих действий."
+];
+
+var page8 = {
+  type: jsPsychSurveyMultiChoice,
+  preamble: '<div class="page"><p>Пожалуйста, оцените свое согласие или несогласие с каждым утверждением по шкале от 1 («полностью не согласен») до 7 («полностью согласен»).</p></div>',
+  questions: agency_items.map(function(item, i) {
+    return likertQ(item, L7, 'agency_' + (i+1));
+  }),
+  button_label: 'Далее',
+  data: { trial_label: 'sense_of_agency' }
+};
+
+/* ── PAGE 9: Self-Control (BSCS, 13 items, 5-point) ── */
+var selfcontrol_items = [
+  "Мне хорошо удается сопротивляться соблазнам.",
+  "Я с трудом отказываюсь от дурных привычек.",
+  "Я ленивый (ая).",
+  "Бывает, что я говорю неуместные вещи.",
+  "Выбирая между приятным и полезным, я выбираю приятное.",
+  "Я умею отказываться от того, что для меня вредно.",
+  "Мне бы хотелось лучше контролировать себя.",
+  "Я произвожу впечатление очень дисциплинированного человека.",
+  "Поговорка «семь раз отмерь, один раз отрежь» – не про меня.",
+  "Иногда я не могу доделать работу, потому что отвлекаюсь на более приятные дела.",
+  "Мне бывает трудно сконцентрироваться.",
+  "Мне удается ставить и достигать долгосрочные цели.",
+  "Иногда я делаю что-то, хотя и знаю, что этого делать не стоит."
+];
+
+var page9 = {
+  type: jsPsychSurveyMultiChoice,
+  preamble: '<div class="page"><p>В ответах под каждым утверждением, пожалуйста, отметьте, насколько верно каждый из пунктов описывает Вас (привычное для Вас состояние).</p></div>',
+  questions: selfcontrol_items.map(function(item, i) {
+    return likertQ(item, L5sc, 'selfcontrol_' + (i+1));
+  }),
+  button_label: 'Далее',
+  data: { trial_label: 'self_control' }
+};
+
+/* ── PAGE 10: Вопросы про отвлечение и технические неполадки ── */
+var page10 = {
+  type: jsPsychSurveyMultiChoice,
+  preamble: '<div class="page"><p>Пожалуйста, ответьте на несколько заключительных вопросов.</p></div>',
+  questions: [
+    {
+      prompt: "Были ли у Вас технические проблемы при просмотре видео (зависания, ошибки, медленная загрузка)?",
+      name: "tech_issues",
+      options: ["Да, были серьёзные технические проблемы", "Да, но незначительные, было достаточно комфортно проходить исследование", "Нет, технических проблем не было"],
+      required: true
+    },
+    {
+      prompt: "Были ли у вас отвлекающие факторы во время просмотра видео (шум, сообщения, звонки, другие люди)?",
+      name: "distractions",
+      options: ["Да, серьёзно отвлекали", "Да, но незначительно", "Нет, ничего не отвлекало"],
+      required: true
+    }
+  ],
+  button_label: 'Далее',
+  data: { trial_label: 'technical_distractions' }
+};
+
+/* ── Сохранение данных (первое, перед debrief) ── */
+var save_data = {
+  type: jsPsychPipe,
+  action: "save",
+  experiment_id: DATAPIPE_EXPERIMENT_ID,
+  filename: filename,
+  data_string: function () { return jsPsych.data.get().csv(); }
+};
+
+/* ── PAGE 11: Debrief + коты + email ── */
+var page11_debrief = {
+  type: jsPsychSurveyText,
+  preamble: '<div class="end-screen">' +
+    '<h1>Спасибо за участие в исследовании!</h1>' +
+    '<p>На самом деле мы изучали, как просмотр видео влияет на эмоциональное состояние человека, и как это связано с его личностными особенностями.</p>' +
+    '<p>Мы предполагаем (а Вы помогаете нам проверить), что:</p>' +
+    '<p>1. Эмоциональное состояние до и после просмотра видео может различаться в зависимости от содержания видео.</p>' +
+    '<p>2. Личностные особенности (склонность к скуке, чувство агентности, самоконтроль) могут влиять на то, как человек реагирует на просмотр.</p>' +
+    '<div style="background: #f0f0f0; border-radius: 16px; padding: 20px; margin: 20px 0;">' +
+    '<p style="font-weight: 500; margin-bottom: 10px;">🎉 Обещанные коты! 🎉</p>' +
+    '<div style="display: flex; flex-direction: column; gap: 15px; align-items: center;">' +
+    '<img src="https://github.com/deniolly-del/myresearch/blob/main/cat1.gif?raw=true" alt="Кот 1" style="max-width: 100%; border-radius: 12px;">' +
+    '<img src="https://github.com/deniolly-del/myresearch/blob/main/cat2.jpg?raw=true" alt="Кот 2" style="max-width: 100%; border-radius: 12px;">' +
+    '<img src="https://github.com/deniolly-del/myresearch/blob/main/cat3.jpg?raw=true" alt="Кот 3" style="max-width: 100%; border-radius: 12px;">' +
+    '<img src="https://github.com/deniolly-del/myresearch/blob/main/cat4.jpg?raw=true" alt="Кот 4" style="max-width: 100%; border-radius: 12px;">' +
+    '<img src="https://github.com/deniolly-del/myresearch/blob/main/cat5.jpg?raw=true" alt="Кот 5" style="max-width: 100%; border-radius: 12px;">' +
+    '<img src="https://github.com/deniolly-del/myresearch/blob/main/cat6.jpg?raw=true" alt="Кот 6" style="max-width: 100%; border-radius: 12px;">' +
+    '</div></div>' +
+    '<p>Если Вы хотите получить информацию о результатах данного исследования, оставьте, пожалуйста, адрес Вашей электронной почты ниже.</p>' +
+    '<p>Все Ваши ответы анонимны и будут использоваться только в обобщённом виде. Если у Вас есть вопросы, Вы можете связаться со мной по адресу: deniolly@gmail.com.</p>' +
+    '<p><strong>Ещё раз спасибо!</strong></p>' +
+    '</div>',
+  questions: [
+    { prompt: "Ваш адрес электронной почты (необязательно):", name: "email", required: false, placeholder: "email@example.com" }
+  ],
+  button_label: 'Завершить',
+  data: { trial_label: 'debrief_email_memes' }
+};
+
+/* ── Сохранение финальных данных (включая email) ── */
+var save_final = {
+  type: jsPsychPipe,
+  action: "save",
+  experiment_id: DATAPIPE_EXPERIMENT_ID,
+  filename: subject_id + "_final.csv",
+  data_string: function () { return jsPsych.data.get().csv(); }
+};
+
+/* ── Финальный экран "готово" ── */
+var done = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '<div class="end-screen"><h1>Исследование завершено</h1><p>Вы можете закрыть эту страницу.</p></div>',
+  choices: ['Закрыть'],
+  data: { trial_label: 'done' }
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   RUN (правильный порядок!)
+   ═══════════════════════════════════════════════════════════════ */
+jsPsych.run([
+  page1,           // 1. Consent (согласие)
+  page2,           // 2. Demographics (демография)
+  page3,           // 3. PANAS pre
+  page4,           // 4. Инструкция к видео
+  page5_video,     // 5. Видео
+  page6,           // 6. PANAS post
+  page7,           // 7. BPS-SR (склонность к скуке)
+  page8,           // 8. SoAS (чувство агентности)
+  page9,           // 9. BSCS (самоконтроль)
+  page10,          // 10. Технические вопросы + отвлечение
+  save_data,       // 11. Сохранение на OSF
+  page11_debrief,  // 12. Debrief + коты + email
+  save_final,      // 13. Финальное сохранение
+  done             // 14. Финальный экран
+]);
+
+</script>
+</html>
