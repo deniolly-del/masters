@@ -148,6 +148,7 @@ var page4 = {
 };
 
 /* ── PAGE 5: Видео с кастомным плеером (без controls, без скорости, без тайминга) ── */
+/* ── PAGE 5: Видео с кастомным плеером (без controls) и трекингом времени ── */
 var page5_video = {
   type: jsPsychHtmlButtonResponse,
   stimulus: '<div class="video-container">' +
@@ -157,9 +158,9 @@ var page5_video = {
     'Ваш браузер не поддерживает видео' +
     '</video>' +
     '<div style="display: flex; justify-content: center; gap: 10px; margin-top: 15px;">' +
-    '<button id="play-pause-btn" style="padding: 10px 24px; background: #4a7ab5; color: white; border: none; border-radius: 40px; font-family: monospace; cursor: pointer;">▶ Начать просмотр</button>' +
+    '<button id="play-pause-btn" style="padding: 10px 24px; background: #4a7ab5; color: white; border: none; border-radius: 40px; font-family: monospace; cursor: pointer;">▶ Play</button>' +
     '</div>' +
-    '<p style="margin-top: 15px; font-size: 14px; color: #666; text-align: center;">Нажмите кнопку "Начать просмотр" для воспроизведения видео<br>После окончания видео нажмите кнопку "Далее"</p>' +
+    '<p style="margin-top: 15px; font-size: 14px; color: #666; text-align: center;">После окончания видео нажмите кнопку "Далее"</p>' +
     '</div>' +
     '</div>',
   choices: ['Далее'],
@@ -177,7 +178,7 @@ var page5_video = {
         }
       });
       
-      // Записываем время начала просмотра (когда реально начали воспроизведение)
+      // Записываем время начала просмотра
       video.addEventListener('play', function() {
         if (videoStartTime === null) {
           videoStartTime = performance.now();
@@ -189,8 +190,8 @@ var page5_video = {
       video.addEventListener('ended', function() {
         videoEndTime = performance.now();
         videoDurationWatched = videoEndTime - videoStartTime;
-        playPauseBtn.textContent = '▶ Просмотрено';
-        playPauseBtn.disabled = true;
+        playPauseBtn.textContent = '▶ Play';
+        playPauseBtn.disabled = false;
         console.log('Видео закончилось, просмотрено: ' + videoDurationWatched + ' мс');
       });
       
@@ -198,10 +199,10 @@ var page5_video = {
       playPauseBtn.addEventListener('click', function() {
         if (video.paused) {
           video.play();
-          playPauseBtn.textContent = '⏸ Пауза';
+          playPauseBtn.textContent = '⏸ Pause';
         } else {
           video.pause();
-          playPauseBtn.textContent = '▶ Продолжить';
+          playPauseBtn.textContent = '▶ Play';
         }
       });
       
@@ -210,7 +211,7 @@ var page5_video = {
         e.preventDefault();
       });
       
-      // Также записываем, если пользователь нажал "Далее" до окончания видео
+      // Записываем, если пользователь нажал "Далее" до окончания видео
       var nextButton = document.querySelector('.jspsych-btn');
       if (nextButton) {
         nextButton.addEventListener('click', function() {
@@ -230,7 +231,6 @@ var page5_video = {
     data.video_completed = videoEndTime !== null && videoStartTime !== null;
   }
 };
-
 /* ── PAGE 6: PANAS POST (во время просмотра видео) ── */
 var panas_post_items = [
   "скучающий", "виноватый", "внимательный", "беспокойный", "уверенный",
