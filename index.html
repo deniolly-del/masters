@@ -387,10 +387,10 @@ var save_data = {
   }
 };
 
-/* ── PAGE 11: Debrief + коты + email (с автоматическим сбором email) ── */
+/* ── PAGE 11: Debrief + коты + email  ── */
 var page11_debrief = {
-  type: jsPsychSurveyText,
-  preamble: '<div class="end-screen">' +
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '<div class="end-screen">' +
     '<h1>Спасибо за участие в исследовании!</h1>' +
     '<p>На самом деле мы изучали, как разные люди переживают скуку и как это связано с их личностными особенностями, то есть почему одни скучают чаще и сильнее, чем другие.</p>' +
     '<p><strong>Мы предполагаем (а Вы помогаете нам проверить), что:</strong></p>' +
@@ -403,7 +403,7 @@ var page11_debrief = {
     '<div style="background: #f5f5f5; border-radius: 16px; padding: 20px; margin: 20px 0;">' +
     '<p style="margin-bottom: 15px;">📧 <strong>Хотите получить результаты исследования?</strong></p>' +
     '<p style="margin-bottom: 10px;">Оставьте Ваш email ниже:</p>' +
-    '<input type="email" id="debrief-email-input" placeholder="email@example.com" style="width: 80%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-family: monospace;">' +
+    '<input type="email" id="debrief-email-input" name="email" placeholder="email@example.com" style="width: 80%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-family: monospace;">' +
     '<p style="font-size: 12px; color: #888; margin-top: 10px;">Ваш email будет использован только для рассылки результатов.</p>' +
     '</div>' +
     '<div style="background: #f0f0f0; border-radius: 16px; padding: 20px; margin: 20px 0;">' +
@@ -420,24 +420,19 @@ var page11_debrief = {
     '<p>Если у вас есть вопросы, вы можете связаться со мной по адресу: <a href="mailto:deniolly@gmail.com">deniolly@gmail.com</a>.</p>' +
     '<p><strong>🐱 Ещё раз спасибо! 🎉</strong></p>' +
     '</div>',
-  questions: [
-    { prompt: "", name: "email", required: false, placeholder: "email@example.com" }
-  ],
-  button_label: 'Завершить',
+  choices: ['Завершить'],
   data: { trial_label: 'debrief_email_memes' },
   on_load: function() {
-    // Автоматически подхватываем email из кастомного поля в стандартное поле jsPsych
-    var customEmailInput = document.getElementById('debrief-email-input');
-    var jspsychEmailInput = document.querySelector('input[name="email"]');
+    // Автоматически сохраняем email из поля в данные jsPsych при нажатии кнопки
+    var nextButton = document.querySelector('.jspsych-btn');
+    var emailInput = document.getElementById('debrief-email-input');
     
-    if (customEmailInput && jspsychEmailInput) {
-      customEmailInput.addEventListener('input', function() {
-        jspsychEmailInput.value = customEmailInput.value;
+    if (nextButton && emailInput) {
+      nextButton.addEventListener('click', function() {
+        var email = emailInput.value;
+        // Добавляем email в данные текущего trial
+        jsPsych.data.get().last(1).select(0).addData({ email: email });
       });
-      var jspsychQuestionDiv = jspsychEmailInput.closest('.jspsych-survey-text-question');
-      if (jspsychQuestionDiv) {
-        jspsychQuestionDiv.style.display = 'none';
-      }
     }
   }
 };
