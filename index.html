@@ -17,134 +17,32 @@
   <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe@0.4"></script>
 
   <style>
+    /* ... ваш стиль ... (оставьте как есть) */
     @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Fraunces:opsz,wght@9..144,300;9..144,500&display=swap');
-
     body { background: #fafafa; touch-action: manipulation; }
     * { touch-action: manipulation; }
-
-    .jspsych-display-element {
-      overflow-y: auto !important;
-    }
-
-    .jspsych-content {
-      font-family: 'DM Mono', monospace;
-      max-width: 700px;
-    }
-
-    .page {
-      font-family: 'Fraunces', serif;
-      font-weight: 300;
-      color: #2a2a2a;
-      font-size: 18px;
-      line-height: 1.7;
-      text-align: left;
-      padding: 30px 20px;
-      max-width: 620px;
-      margin: 0 auto;
-    }
+    .jspsych-display-element { overflow-y: auto !important; }
+    .jspsych-content { font-family: 'DM Mono', monospace; max-width: 700px; }
+    .page { font-family: 'Fraunces', serif; font-weight: 300; color: #2a2a2a; font-size: 18px; line-height: 1.7; text-align: left; padding: 30px 20px; max-width: 620px; margin: 0 auto; }
     .page h1 { font-size: 28px; font-weight: 500; margin-bottom: 20px; text-align: center; color: #1a1a1a; }
     .page p { margin-bottom: 14px; color: #333; }
     .page ul { margin: 10px 0 14px 20px; }
     .page li { margin-bottom: 6px; }
     .page .note { font-size: 14px; color: #888; font-family: 'DM Mono', monospace; }
-
-    .jspsych-survey-multi-choice-question { 
-      font-size: 16px !important; 
-      font-family: 'Fraunces', serif !important;
-      margin-bottom: 15px !important;
-    }
-    .jspsych-survey-multi-choice-options {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin: 10px 0 20px 0;
-      padding-left: 10px;
-    }
-    .jspsych-survey-multi-choice-option {
-      font-size: 14px !important;
-      font-family: 'DM Mono', monospace !important;
-      display: flex !important;
-      align-items: center !important;
-      gap: 10px !important;
-    }
-    .jspsych-survey-multi-choice-option input[type="radio"] {
-      width: 18px;
-      height: 18px;
-      margin: 0 !important;
-      flex-shrink: 0;
-    }
-
-    .jspsych-survey-text .jspsych-survey-text-question p {
-      font-family: 'Fraunces', serif !important;
-      font-size: 16px !important;
-      color: #333;
-    }
-
-    #jspsych-survey-html-form input[type="number"] {
-      width: 80px; padding: 6px 10px; font-size: 16px;
-      border: 1px solid #ccc; border-radius: 4px;
-      font-family: 'DM Mono', monospace;
-    }
-
-    .jspsych-btn {
-      font-family: 'DM Mono', monospace !important;
-      font-size: 16px !important;
-      padding: 12px 28px !important;
-      margin: 30px auto 20px auto !important;
-      display: block !important;
-      background-color: #4a7ab5 !important;
-      color: white !important;
-      border: none !important;
-      border-radius: 40px !important;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .jspsych-btn:hover {
-      background-color: #3a6a9e !important;
-    }
-
-    .jspsych-content-wrapper {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: auto;
-    }
-
-    .video-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    
-    .video-wrapper {
-      position: relative;
-      width: 100%;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    
-    .video-wrapper iframe,
-    .video-wrapper video {
-      width: 100%;
-      max-width: 800px;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    }
-    
-    @media (max-width: 768px) {
-      .video-wrapper iframe,
-      .video-wrapper video {
-        height: auto;
-        min-height: 250px;
-      }
-    }
-
-    .end-screen {
-      font-family: 'Fraunces', serif; text-align: center; padding: 40px 20px;
-      max-width: 600px; margin: 0 auto;
-    }
+    .jspsych-survey-multi-choice-question { font-size: 16px !important; font-family: 'Fraunces', serif !important; margin-bottom: 15px !important; }
+    .jspsych-survey-multi-choice-options { display: flex; flex-direction: column; gap: 10px; margin: 10px 0 20px 0; padding-left: 10px; }
+    .jspsych-survey-multi-choice-option { font-size: 14px !important; font-family: 'DM Mono', monospace !important; display: flex !important; align-items: center !important; gap: 10px !important; }
+    .jspsych-survey-multi-choice-option input[type="radio"] { width: 18px; height: 18px; margin: 0 !important; flex-shrink: 0; }
+    .jspsych-survey-text .jspsych-survey-text-question p { font-family: 'Fraunces', serif !important; font-size: 16px !important; color: #333; }
+    #jspsych-survey-html-form input[type="number"] { width: 80px; padding: 6px 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px; font-family: 'DM Mono', monospace; }
+    .jspsych-btn { font-family: 'DM Mono', monospace !important; font-size: 16px !important; padding: 12px 28px !important; margin: 30px auto 20px auto !important; display: block !important; background-color: #4a7ab5 !important; color: white !important; border: none !important; border-radius: 40px !important; cursor: pointer; transition: background 0.2s; }
+    .jspsych-btn:hover { background-color: #3a6a9e !important; }
+    .jspsych-content-wrapper { display: flex; flex-direction: column; justify-content: space-between; min-height: auto; }
+    .video-container { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+    .video-wrapper { position: relative; width: 100%; max-width: 800px; margin: 0 auto; }
+    .video-wrapper iframe, .video-wrapper video { width: 100%; max-width: 800px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+    @media (max-width: 768px) { .video-wrapper iframe, .video-wrapper video { height: auto; min-height: 250px; } }
+    .end-screen { font-family: 'Fraunces', serif; text-align: center; padding: 40px 20px; max-width: 600px; margin: 0 auto; }
     .end-screen h1 { font-size: 28px; font-weight: 300; margin-bottom: 20px; color: #2a2a2a; }
     .end-screen p { font-size: 16px; color: #555; line-height: 1.7; margin-bottom: 12px; }
   </style>
@@ -153,9 +51,13 @@
 <script>
 
 /* ═══════════════════════════════════════════════════════════════
-   CONFIG
+   CONFIG & ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ (ОБЪЯВЛЕНЫ В САМОМ НАЧАЛЕ)
    ═══════════════════════════════════════════════════════════════ */
 var DATAPIPE_EXPERIMENT_ID = "PgUsKMpOuZGD";
+var experimentStartTime = performance.now();
+var videoStartTime = null;
+var videoEndTime = null;
+var videoDurationWatched = 0;
 
 /* ═══════════════════════════════════════════════════════════════
    HELPERS
@@ -168,14 +70,12 @@ function likertQ(prompt, labels, name) {
   return { prompt: prompt, options: labels, required: true, name: name };
 }
 
-
 /* ═══════════════════════════════════════════════════════════════
    EXPERIMENT TIMELINE
    ═══════════════════════════════════════════════════════════════ */
 var jsPsych = initJsPsych();
 var subject_id = jsPsych.randomization.randomID(10);
 var filename = subject_id + ".csv";
-
 
 /* ── PAGE 1: Consent ── */
 var page1 = {
@@ -198,7 +98,7 @@ var page1 = {
   data: { trial_label: 'consent' }
 };
 
-/* ── PAGE 2: Demographics (самая первая!) ── */
+/* ── PAGE 2: Демография ── */
 var page2 = {
   type: jsPsychSurveyHtmlForm,
   preamble: '<div class="page"><h1>Демографические данные</h1></div>',
@@ -238,15 +138,16 @@ var page4 = {
   type: jsPsychHtmlButtonResponse,
   stimulus: '<div class="page">' +
     '<h1>Инструкция</h1>' +
-    '<p>Сейчас Вы увидите видео. Пожалуйста, посмотрите его внимательно.</p>' +
-    '<p>Видео длится несколько минут. После просмотра Вам будет предложено ответить на несколько вопросов.</p>' +
+    '<p>Сейчас Вы увидите видео c мужчиной, который рассказывает про свой день, оно длится около 5 минут. Пожалуйста, посмотрите его.</p>' +
+    '<p>Сейчас в наших реалиях иногда могут встречаться технические трудности и задержки в воспроизведении. Мы приносим извинения за возможное неудобство и просим все равно, пожалуйста, если вдруг видео будет заедать, не перезагружать страницу и досмотреть до конца, на содержание ролика это не влияет.</p>' +
+    '<p>В качестве компенсации обещаем в конце исследования показать 🐱🎉 смешных котов 🐱🎉!</p>' +
     '<p class="note">Нажмите «Смотреть видео», чтобы продолжить.</p>' +
     '</div>',
   choices: ['Смотреть видео'],
   data: { trial_label: 'video_instruction' }
 };
 
-/* ── PAGE 5: Видео ── */
+/* ── PAGE 5: Видео с отслеживанием времени просмотра ── */
 var page5_video = {
   type: jsPsychHtmlButtonResponse,
   stimulus: '<div class="video-container">' +
@@ -263,13 +164,48 @@ var page5_video = {
   on_load: function() {
     var video = document.getElementById('main-video');
     if (video) {
+      // Запрещаем ускорение
       video.playbackRate = 1.0;
       video.addEventListener('ratechange', function() {
         if (video.playbackRate !== 1.0) {
           video.playbackRate = 1.0;
         }
       });
+      
+      // Записываем время начала просмотра
+      video.addEventListener('play', function() {
+        if (videoStartTime === null) {
+          videoStartTime = performance.now();
+          console.log('Видео началось в: ' + videoStartTime);
+        }
+      });
+      
+      // Записываем время окончания (когда видео докрутило до конца)
+      video.addEventListener('ended', function() {
+        videoEndTime = performance.now();
+        videoDurationWatched = videoEndTime - videoStartTime;
+        console.log('Видео закончилось, просмотрено: ' + videoDurationWatched + ' мс');
+      });
+      
+      // Также записываем, если пользователь нажал "Далее" до окончания видео
+      var nextButton = document.querySelector('.jspsych-btn');
+      if (nextButton) {
+        nextButton.addEventListener('click', function() {
+          if (videoEndTime === null) {
+            // Пользователь не досмотрел видео
+            videoEndTime = performance.now();
+            videoDurationWatched = videoEndTime - (videoStartTime || videoEndTime);
+            console.log('Видео прервано, просмотрено: ' + videoDurationWatched + ' мс');
+          }
+        });
+      }
     }
+  },
+  on_finish: function(data) {
+    // Сохраняем данные о просмотре видео
+    data.video_start_time_ms = videoStartTime ? Math.round(videoStartTime - experimentStartTime) : null;
+    data.video_duration_watched_ms = videoDurationWatched ? Math.round(videoDurationWatched) : null;
+    data.video_completed = videoEndTime !== null && videoStartTime !== null;
   }
 };
 
@@ -283,7 +219,7 @@ var panas_post_items = [
 
 var page6 = {
   type: jsPsychSurveyMultiChoice,
-  preamble: '<div class="page"><p>Прочитайте, пожалуйста, каждое прилагательное и отметьте, в какой мере Вы чувствовали себя <strong>ВО ВРЕМЯ ПРОСМОТРА ВИДЕО</strong>.</p></div>',
+  preamble: '<div class="page"><p>Спасибо за просмотр! Осталось пройти всего несколько коротких опросников. Прочитайте, пожалуйста, каждое прилагательное и отметьте, в какой мере Вы чувствовали себя <strong>ВО ВРЕМЯ ПРОСМОТРА ВИДЕО</strong>.</p></div>',
   questions: panas_post_items.map(function(item, i) {
     return likertQ(item, L5, 'panas_post_' + (i+1));
   }),
@@ -371,12 +307,37 @@ var page9 = {
 /* ── PAGE 10: Вопросы про отвлечение и технические неполадки ── */
 var page10 = {
   type: jsPsychSurveyMultiChoice,
-  preamble: '<div class="page"><p>Пожалуйста, ответьте на несколько заключительных вопросов.</p></div>',
+  preamble: '<div class="page">' +
+    '<p>Спасибо за участие в нашем исследовании! Для лучшей интерпретации результатов, пожалуйста, ответьте на несколько заключительных вопросов. Далее будут представлены несколько вопросов, касающихся Вашего эмоционального самочувствия за последние две недели.</p>' +
+    '<p>Оцените, пожалуйста, насколько часто следующие проблемы беспокоили вас в течение прошедших двух недель. Для ответов используйте следующую шкалу:</p>' +
+    '<p><strong>0</strong> — совсем нет;<br>' +
+    '<strong>1</strong> — в течение нескольких дней;<br>' +
+    '<strong>2</strong> — более, чем половину этого времени;<br>' +
+    '<strong>3</strong> — почти каждый день.</p>' +
+    '</div>',
   questions: [
     {
-      prompt: "Были ли у Вас технические проблемы при просмотре видео (зависания, ошибки, медленная загрузка)?",
-      name: "tech_issues",
-      options: ["Да, были серьёзные технические проблемы", "Да, но незначительные, было достаточно комфортно проходить исследование", "Нет, технических проблем не было"],
+      prompt: "Чувство тревоги или раздражения",
+      name: "emotional_state_1",
+      options: ["0 – совсем нет", "1 – в течение нескольких дней", "2 – более, чем половину этого времени", "3 – почти каждый день"],
+      required: true
+    },
+    {
+      prompt: "Неспособность справиться со своим беспокойством",
+      name: "emotional_state_2",
+      options: ["0 – совсем нет", "1 – в течение нескольких дней", "2 – более, чем половину этого времени", "3 – почти каждый день"],
+      required: true
+    },
+    {
+      prompt: "Снижение интереса и удовольствия от привычных дел",
+      name: "emotional_state_3",
+      options: ["0 – совсем нет", "1 – в течение нескольких дней", "2 – более, чем половину этого времени", "3 – почти каждый день"],
+      required: true
+    },
+    {
+      prompt: "Чувство подавленности или безнадежности",
+      name: "emotional_state_4",
+      options: ["0 – совсем нет", "1 – в течение нескольких дней", "2 – более, чем половину этого времени", "3 – почти каждый день"],
       required: true
     },
     {
@@ -390,24 +351,39 @@ var page10 = {
   data: { trial_label: 'technical_distractions' }
 };
 
-/* ── Сохранение данных (первое, перед debrief) ── */
+/* ── Сохранение данных (первое, перед debrief) с общим временем ── */
 var save_data = {
   type: jsPsychPipe,
   action: "save",
   experiment_id: DATAPIPE_EXPERIMENT_ID,
   filename: filename,
-  data_string: function () { return jsPsych.data.get().csv(); }
+  data_string: function () { 
+    // Добавляем общее время эксперимента в данные
+    var totalTime = performance.now() - experimentStartTime;
+    jsPsych.data.addDataToLastTrial({ total_experiment_time_ms: Math.round(totalTime) });
+    return jsPsych.data.get().csv();
+  }
 };
 
-/* ── PAGE 11: Debrief + коты + email ── */
+/* ── PAGE 11: Debrief + коты + email (с автоматическим сбором email) ── */
 var page11_debrief = {
   type: jsPsychSurveyText,
   preamble: '<div class="end-screen">' +
     '<h1>Спасибо за участие в исследовании!</h1>' +
-    '<p>На самом деле мы изучали, как просмотр видео влияет на эмоциональное состояние человека, и как это связано с его личностными особенностями.</p>' +
-    '<p>Мы предполагаем (а Вы помогаете нам проверить), что:</p>' +
-    '<p>1. Эмоциональное состояние до и после просмотра видео может различаться в зависимости от содержания видео.</p>' +
-    '<p>2. Личностные особенности (склонность к скуке, чувство агентности, самоконтроль) могут влиять на то, как человек реагирует на просмотр.</p>' +
+    '<p>На самом деле мы изучали, как разные люди переживают скуку и как это связано с их личностными особенностями, то есть почему одни скучают чаще и сильнее, чем другие.</p>' +
+    '<p><strong>Мы предполагаем (а Вы помогаете нам проверить), что:</strong></p>' +
+    '<ol style="text-align: left; margin: 15px 0 15px 20px; line-height: 1.6;">' +
+    '<li>Люди, которые в целом склонны к скуке, будут сильнее скучать во время просмотра скучного видео.</li>' +
+    '<li>Люди, которые чувствуют, что они контролируют свою жизнь и свои действия (у них высокое чувство агентности), будут меньше скучать во время просмотра скучного видео.</li>' +
+    '<li>Если человек чувствует, что он контролирует свои действия, даже склонность к скуке может не привести к сильной скуке во время просмотра скучного видео.</li>' +
+    '</ol>' +
+    '<p><em>Видео было специально подобрано как монотонное, чтобы вызвать эмоцию скуки.</em></p>' +
+    '<div style="background: #f5f5f5; border-radius: 16px; padding: 20px; margin: 20px 0;">' +
+    '<p style="margin-bottom: 15px;">📧 <strong>Хотите получить результаты исследования?</strong></p>' +
+    '<p style="margin-bottom: 10px;">Оставьте Ваш email ниже:</p>' +
+    '<input type="email" id="debrief-email-input" placeholder="email@example.com" style="width: 80%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-family: monospace;">' +
+    '<p style="font-size: 12px; color: #888; margin-top: 10px;">Ваш email будет использован только для рассылки результатов.</p>' +
+    '</div>' +
     '<div style="background: #f0f0f0; border-radius: 16px; padding: 20px; margin: 20px 0;">' +
     '<p style="font-weight: 500; margin-bottom: 10px;">🎉 Обещанные коты! 🎉</p>' +
     '<div style="display: flex; flex-direction: column; gap: 15px; align-items: center;">' +
@@ -418,24 +394,43 @@ var page11_debrief = {
     '<img src="https://github.com/deniolly-del/myresearch/blob/main/cat5.jpg?raw=true" alt="Кот 5" style="max-width: 100%; border-radius: 12px;">' +
     '<img src="https://github.com/deniolly-del/myresearch/blob/main/cat6.jpg?raw=true" alt="Кот 6" style="max-width: 100%; border-radius: 12px;">' +
     '</div></div>' +
-    '<p>Если Вы хотите получить информацию о результатах данного исследования, оставьте, пожалуйста, адрес Вашей электронной почты ниже.</p>' +
-    '<p>Все Ваши ответы анонимны и будут использоваться только в обобщённом виде. Если у Вас есть вопросы, Вы можете связаться со мной по адресу: deniolly@gmail.com.</p>' +
-    '<p><strong>Ещё раз спасибо!</strong></p>' +
+    '<p>Все ваши ответы анонимны и будут использоваться только в обобщённом виде.</p>' +
+    '<p>Если у вас есть вопросы, вы можете связаться со мной по адресу: <a href="mailto:deniolly@gmail.com">deniolly@gmail.com</a>.</p>' +
+    '<p><strong>🐱 Ещё раз спасибо! 🎉</strong></p>' +
     '</div>',
   questions: [
-    { prompt: "Ваш адрес электронной почты (необязательно):", name: "email", required: false, placeholder: "email@example.com" }
+    { prompt: "", name: "email", required: false, placeholder: "email@example.com" }
   ],
   button_label: 'Завершить',
-  data: { trial_label: 'debrief_email_memes' }
+  data: { trial_label: 'debrief_email_memes' },
+  on_load: function() {
+    // Автоматически подхватываем email из кастомного поля в стандартное поле jsPsych
+    var customEmailInput = document.getElementById('debrief-email-input');
+    var jspsychEmailInput = document.querySelector('input[name="email"]');
+    
+    if (customEmailInput && jspsychEmailInput) {
+      customEmailInput.addEventListener('input', function() {
+        jspsychEmailInput.value = customEmailInput.value;
+      });
+      var jspsychQuestionDiv = jspsychEmailInput.closest('.jspsych-survey-text-question');
+      if (jspsychQuestionDiv) {
+        jspsychQuestionDiv.style.display = 'none';
+      }
+    }
+  }
 };
 
-/* ── Сохранение финальных данных (включая email) ── */
+/* ── Сохранение финальных данных (включая email) с общим временем ── */
 var save_final = {
   type: jsPsychPipe,
   action: "save",
   experiment_id: DATAPIPE_EXPERIMENT_ID,
   filename: subject_id + "_final.csv",
-  data_string: function () { return jsPsych.data.get().csv(); }
+  data_string: function () { 
+    var totalTime = performance.now() - experimentStartTime;
+    jsPsych.data.addDataToLastTrial({ total_experiment_time_ms: Math.round(totalTime) });
+    return jsPsych.data.get().csv();
+  }
 };
 
 /* ── Финальный экран "готово" ── */
@@ -450,20 +445,20 @@ var done = {
    RUN (правильный порядок!)
    ═══════════════════════════════════════════════════════════════ */
 jsPsych.run([
-  page1,           // 1. Consent (согласие)
-  page2,           // 2. Demographics (демография)
+  page1,           // 1. Consent
+  page2,           // 2. Demographics
   page3,           // 3. PANAS pre
   page4,           // 4. Инструкция к видео
-  page5_video,     // 5. Видео
+  page5_video,     // 5. Видео с трекингом
   page6,           // 6. PANAS post
-  page7,           // 7. BPS-SR (склонность к скуке)
-  page8,           // 8. SoAS (чувство агентности)
-  page9,           // 9. BSCS (самоконтроль)
-  page10,          // 10. Технические вопросы + отвлечение
-  save_data,       // 11. Сохранение на OSF
+  page7,           // 7. BPS-SR
+  page8,           // 8. SoAS
+  page9,           // 9. BSCS
+  page10,          // 10. Финальные вопросы
+  save_data,       // 11. Сохранение
   page11_debrief,  // 12. Debrief + коты + email
   save_final,      // 13. Финальное сохранение
-  done             // 14. Финальный экран
+  done             // 14. Завершение
 ]);
 
 </script>
