@@ -147,24 +147,29 @@ var page4 = {
   data: { trial_label: 'video_instruction' }
 };
 
-/* ── PAGE 5: Видео с отслеживанием времени просмотра ── */
+/* ── PAGE 5: Видео с кастомным плеером (без controls, без скорости, без тайминга) ── */
 var page5_video = {
   type: jsPsychHtmlButtonResponse,
   stimulus: '<div class="video-container">' +
     '<div class="video-wrapper">' +
-    '<video id="main-video" width="800" controls>' +
+    '<video id="main-video" width="800">' +
     '<source src="https://github.com/deniolly-del/materials/raw/refs/heads/main/converted-online-video-cuttercom-1_9aDY25jA.mp4" type="video/mp4">' +
     'Ваш браузер не поддерживает видео' +
     '</video>' +
-    '<p style="margin-top: 20px; font-size: 14px; color: #666; text-align: center;">▶️ Нажмите "play" для просмотра<br>После окончания видео нажмите кнопку "Далее"</p>' +
+    '<div style="display: flex; justify-content: center; gap: 10px; margin-top: 15px;">' +
+    '<button id="play-pause-btn" style="padding: 10px 24px; background: #4a7ab5; color: white; border: none; border-radius: 40px; font-family: monospace; cursor: pointer;">▶ Начать просмотр</button>' +
+    '</div>' +
+    '<p style="margin-top: 15px; font-size: 14px; color: #666; text-align: center;">Нажмите кнопку "Начать просмотр" для воспроизведения видео<br>После окончания видео нажмите кнопку "Далее"</p>' +
     '</div>' +
     '</div>',
   choices: ['Далее'],
   data: { trial_label: 'video_task' },
   on_load: function() {
     var video = document.getElementById('main-video');
+    var playPauseBtn = document.getElementById('play-pause-btn');
+    
     if (video) {
-      // Запрещаем ускорение
+      // Запрещаем ускорение/замедление через клавиши
       video.playbackRate = 1.0;
       video.addEventListener('ratechange', function() {
         if (video.playbackRate !== 1.0) {
@@ -172,7 +177,7 @@ var page5_video = {
         }
       });
       
-      // Записываем время начала просмотра
+      // Записываем время начала просмотра (когда реально начали воспроизведение)
       video.addEventListener('play', function() {
         if (videoStartTime === null) {
           videoStartTime = performance.now();
@@ -184,7 +189,25 @@ var page5_video = {
       video.addEventListener('ended', function() {
         videoEndTime = performance.now();
         videoDurationWatched = videoEndTime - videoStartTime;
+        playPauseBtn.textContent = '▶ Просмотрено';
+        playPauseBtn.disabled = true;
         console.log('Видео закончилось, просмотрено: ' + videoDurationWatched + ' мс');
+      });
+      
+      // Кнопка Play/Pause
+      playPauseBtn.addEventListener('click', function() {
+        if (video.paused) {
+          video.play();
+          playPauseBtn.textContent = '⏸ Пауза';
+        } else {
+          video.pause();
+          playPauseBtn.textContent = '▶ Продолжить';
+        }
+      });
+      
+      // Скрываем контекстное меню (правый клик)
+      video.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
       });
       
       // Также записываем, если пользователь нажал "Далее" до окончания видео
@@ -192,7 +215,6 @@ var page5_video = {
       if (nextButton) {
         nextButton.addEventListener('click', function() {
           if (videoEndTime === null) {
-            // Пользователь не досмотрел видео
             videoEndTime = performance.now();
             videoDurationWatched = videoEndTime - (videoStartTime || videoEndTime);
             console.log('Видео прервано, просмотрено: ' + videoDurationWatched + ' мс');
